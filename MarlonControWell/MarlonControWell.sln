@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarlonControWell.Server", "Server\MarlonControWell.Server.csproj", "{148FF250-2090-4901-A1BA-EED62483337A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarlonControWell.Server", "Server\MarlonControWell.Server.csproj", "{148FF250-2090-4901-A1BA-EED62483337A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarlonControWell.Client", "Client\MarlonControWell.Client.csproj", "{C8CBAC43-53AA-4587-A3B7-CAB9A19EFA89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarlonControWell.Client", "Client\MarlonControWell.Client.csproj", "{C8CBAC43-53AA-4587-A3B7-CAB9A19EFA89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarlonControWell.Shared", "Shared\MarlonControWell.Shared.csproj", "{1CE30AFD-A913-45D6-AB2C-7F4764E94E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarlonControWell.Shared", "Shared\MarlonControWell.Shared.csproj", "{1CE30AFD-A913-45D6-AB2C-7F4764E94E89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

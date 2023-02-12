@@ -1,0 +1,52 @@
+﻿@using MarlonControWell.Shared;
+@using MarlonControWell.Client.Services.PozoService;
+@using MarlonControWell.Shared
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IPozoService PozoService
+
+<table class="table">
+    <thead>
+        <tr>
+            @* <th>Id</th>*@
+            <th>Nombre</th>
+            <th>Ubicacion</th>
+            <th>Operadora</th>
+            <th>Comentario</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Pozo in Pozos)
+        {
+            <tr>
+                <td>@Pozo.NombrePozo</td>
+                <td>@Pozo.Ubicacion</td>
+                <td>@Pozo.Operadora</td>
+                <td>@Pozo.Comentario</td>
+            </tr>
+            
+           
+        }
+    </tbody>
+</table>
+
+@code {
+
+    Boolean state = false;
+    Boolean update = false;
+    int id;
+    Boolean PozosState = false;
+
+    public static List<Pozo> Pozos = new List<Pozo>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var resultado = await Http.GetFromJsonAsync<List<Pozo>>("api/Pozo");
+        if (resultado != null)
+            Pozos = resultado;
+        PozosState = true;
+    }
+}
