@@ -104,3 +104,13 @@ C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\obj\Debug\
 C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\obj\Debug\net6.0\MarlonControWell.Server.pdb
 C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\obj\Debug\net6.0\MarlonControWell.Server.genruntimeconfig.cache
 C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\obj\Debug\net6.0\ref\MarlonControWell.Server.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\CurrieTechnologies.Razor.SweetAlert2.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\System.Web.Http.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\System.Web.Http.WebHost.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\Swashbuckle.Core.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\WebActivatorEx.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\Dagoberto\Downloads\MarlonControWell\MarlonControWell\Server\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll

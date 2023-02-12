@@ -1,0 +1,340 @@
+﻿@page "/pozolist"
+@using CurrieTechnologies.Razor.SweetAlert2;
+@using MarlonControWell.Client.Services.PozoService;
+@using MarlonControWell.Shared
+@using System.Net.Http.Json
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IPozoService PozoService
+@inject SweetAlertService Swal
+
+<h3>Pozos</h3>
+
+@*TABLA POZOLIST*@
+
+<div class="table-container-scroll">
+<table class="table">
+    <thead>
+        <tr>
+           @* <th>Id</th>*@
+            <th>Nombre</th>
+            <th>Ubicacion</th>
+            <th>Operadora</th>
+            <th>Comentario</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Pozo in Pozos)
+        {
+            
+             <tr>
+               @*<td>@Pozo.Id</td>*@
+               @if(update == true && Pozo.Id == id){<td><input @bind-value="@Pozo.NombrePozo" /></td>}else{<td>@Pozo.NombrePozo</td>}
+               @if(update == true && Pozo.Id == id){<td><input @bind-value="@Pozo.Ubicacion" /></td>}else{<td>@Pozo.Ubicacion</td>}
+               @if(update == true && Pozo.Id == id){<td><input @bind-value="@Pozo.Operadora" /></td>}else{<td>@Pozo.Operadora</td>}
+               @if(update == true && Pozo.Id == id){<td><input @bind-value="@Pozo.Comentario" /></td>}else{<td>@Pozo.Comentario</td>}
+
+                <td>
+                  @if(update == true && Pozo.Id == id){
+                    <button type="submit" class="btn btn-info" data-toggle="tooltip" title="Save" @onclick="(()=>UpdatePozo(Pozo))">
+                      <i class="fa-solid fa-circle-check"></i>
+                    </button>
+                    <button class="btn btn-danger" @onclick="Cancelar" data-toggle="tooltip" title="Cancel">
+                      <i class="fa-solid fa-ban"></i>
+                    </button>
+                  }else{
+                    <button class="btn btn-primary" data-toggle="tooltip" title="Update" @onclick="(()=> updatedatarow(Pozo.Id))"><i class="oi oi-pencil"></i></button>
+                    <button class="btn btn-warning" data-toggle="tooltip" title="Delete" @onclick="(()=>  DeletePozo(Pozo.Id))"><i class="oi oi-trash"></i></button>
+                  }
+                </td>
+               </tr>
+                }
+    </tbody>
+</table>
+</div>
+
+@*Loading database*@
+@if (PozosState == false)
+{
+    <div id="db-spinner">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+}
+
+@*AGREGAR NUEVO POZO BUTTON*@
+
+@if (state == true || PozosState == false){
+  <button class="btn btn-success" @onclick="NevegarVariablesLista" disabled >Nuevo Pozo</button>
+}else
+{<button class="btn btn-success" @onclick="NevegarVariablesLista">Nuevo Pozo</button> }
+
+@*AGREGAR NUEVO POZO*@
+
+@if (state == true)
+ {
+  <div class="create-pozo-container">
+    <div class="add-pozo-card">
+       <EditForm Model="pozo" OnSubmit="EviarPozo">
+        <br />
+        <div>
+            <label for="nombre">Nombre pozo</label>
+            <InputText id="nombre" @bind-Value="pozo.NombrePozo" class="form-control"></InputText>
+        </div>
+        <div>
+            <label for="lastname">Ubicacion</label>
+            <InputText id="lastname" @bind-Value="pozo.Ubicacion" class="form-control"></InputText>
+        </div>
+        <div>
+            <label for="lastname">Operadora</label>
+            <InputText id="lastname" @bind-Value="pozo.Operadora" class="form-control"></InputText>
+        </div>
+        <div>
+            <label for="lastname">Comentario</label>
+            <InputText id="lastname" @bind-Value="pozo.Comentario" class="form-control"></InputText>
+        </div>
+
+        <br />
+        <div class="button-group">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <button class="btn btn-danger" @onclick="Cancelar">Cancelar</button>
+        </div>
+        <br />
+        <br />
+    </EditForm>
+    </div>
+  </div>
+ }else{
+  <h1></h1>    
+  }
+
+<style>
+
+ body{
+   font-family: Arial;
+  }
+
+  input {
+    border-radius: 5px;
+    background-color: #f7fafc;
+    width: 90%;
+    height: 40px;
+    border: 0.5px dashed blue;
+        /*border-style: inset;*/
+/*      border-width: 1px;
+*/
+     /* border-top-style: hidden;
+      border-right-style: solid;
+      border-bottom-style: hidden;
+      border-left-style: solid;*/
+
+  }
+/* estilos de la tabla */
+
+  .table-container-scroll{
+          overflow:scroll;
+         height:500px;
+         width:100%;
+
+  }
+
+    table{
+        background-color: white;
+        text-align: left;
+        border-collapse: collapse;
+        width: 100%;
+
+    }
+
+    th, td{
+        padding: 10px;
+        margin-left: 40px;
+    }
+
+    thead{
+        background-color: #388e3c;
+        border-bottom: solid 3px #0F362D;
+        color: #eeeeee;
+        position: sticky;
+        top: 0px;
+
+    }
+
+    tr:nth-child(even){
+        background-color: #ddd;
+    }
+
+    tr:hover td{
+       background-color: rgba(100, 176, 161, 0.8);
+       /*background-color: #369681;*/
+       color: #eeeeee;
+    }
+
+ /* estilos formulario agregar pozo*/
+ .create-pozo-container{
+       position: absolute;
+       top: 55px;
+       left: 250px;
+       padding: 12px;
+       width: 1110px;
+       height: 570px;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       background: rgba(0, 0, 0, 0.45);
+ }
+
+ .add-pozo-card{
+      width: 280px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(223, 230, 233,1.0);
+      border-radius: 8px;
+      color: rgba(0, 0, 0,1.0);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.45);
+
+   }
+
+ .add-pozo-card label {
+     margin-bottom: 5px;
+     margin-top: 6px;
+ }
+ .button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+
+ #db-spinner {
+           position: absolute;
+           top: 55px;
+           left: 250px;
+           padding: 12px;
+           width: 1110px;
+           height: 570px;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+ }
+
+</style>
+@code {
+
+    Boolean state = false;
+    Boolean update = false;
+    int id;
+    Boolean PozosState = false;
+
+    public static List<Pozo> Pozos = new List<Pozo>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var resultado = await Http.GetFromJsonAsync<List<Pozo>>("api/Pozo");
+        if (resultado != null)
+            Pozos = resultado;
+        PozosState = true;
+    }
+
+    [Parameter]
+
+    public int? Id { get; set; }
+
+    Pozo pozo = new Pozo();
+
+
+    async Task EviarPozo()
+    {
+        try
+        {
+            await PozoService.CreatePozo(pozo);
+            var resultado = await Swal.FireAsync(new SweetAlertOptions
+                {
+                    Title = "Success",
+                    Text = "Guardado correctamente",
+                    Icon = SweetAlertIcon.Success,
+                });
+        }
+        catch (InvalidCastException e)
+        {
+            Console.WriteLine(e);
+
+            state = false;
+            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/pozolist");
+        }
+        finally
+        {
+            state = false;
+            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/pozolist");
+        }
+    }
+
+    async Task DeletePozo(int _id)
+    {
+        var resultado = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Eliminar",
+                Text = "¿ Estas seguro que deseas eliminar ?",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Eliminar",
+                CancelButtonText = "Cancelar"
+            });
+
+        var confirmado = !string.IsNullOrEmpty(resultado.Value);
+
+        if(!confirmado)
+        {
+            //context.PreventNavigation();
+        }else
+        {           
+          await PozoService.DeletePozo(_id);
+            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/pozolist");
+        }
+
+    }
+
+    async Task UpdatePozo(Pozo pozo)
+    {
+        await PozoService.UpdatePozo(pozo);
+        var resultado = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Success",
+                Text = "Actualizado correctamente",
+                Icon = SweetAlertIcon.Success,
+            });
+
+        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/pozolist");
+    }
+
+    void updatedatarow(int _id)
+    {
+        update = true;
+        id = _id;
+    }
+
+    void Cancelar()
+    {
+        state = false;
+        update = false;
+    }
+
+    void NevegarVariablesLista()
+    {
+        //NanigationManager.NavigateTo("/crearpozo");
+        state = true;
+    }
+    void MostrarUnPozo(int id)
+    {
+        NavigationManager.NavigateTo($"singlePozo/{id}");
+    }
+}
+
